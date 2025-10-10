@@ -16,7 +16,20 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de tarefas', style: TextStyle(color: Colors.white)),
+        leading: Image.network(
+          'https://img.icons8.com/ios-filled/50/000000/task.png',
+          color: Colors.white,
+          scale: 1.5,
+        ),
+        title: Column(
+          children: [
+            Text('Lista de tarefas', style: TextStyle(color: Colors.white)),
+            Text(
+              'Gerencie suas tarefas diárias',
+              style: TextStyle(color: Colors.white, fontSize: 12),
+            ),
+          ],
+        ),
         backgroundColor: Colors.indigo,
       ),
       body: Column(
@@ -69,7 +82,23 @@ class _HomePageState extends State<HomePage> {
             child: ListView.builder(
               itemCount: _tarefas.length,
               itemBuilder: (context, index) {
-                return ListTile(title: Text(_tarefas[index]));
+                return ListTile(
+                  leading: Image.network(
+                    'https://img.icons8.com/ios-filled/50/000000/task.png',
+                    color: Colors.indigo,
+                  ),
+                  title: Text(
+                    _tarefas[index],
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Text('Clique na lixeira para remover'),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete, color: Colors.indigo),
+                    onPressed: () {
+                      setState(() {});
+                    },
+                  ),
+                );
               },
             ),
           ),
