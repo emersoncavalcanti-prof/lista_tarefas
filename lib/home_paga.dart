@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,6 +14,47 @@ class _HomePageState extends State<HomePage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controllerTarefa = TextEditingController();
   final List<String> _tarefas = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    carregarTarefas();
+  }
+
+  void carregarTarefas() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? tarefaJson = prefs.getString('tarefas');
+
+    if (tarefaJson != null) {
+      setState(() {
+        _tarefas.addAll(List<String>.from(json.decode(tarefaJson)));
+      });
+    }
+  }
+
+  void salvarTarefa() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String tarefaJson = json.encode(_tarefas);
+    await prefs.setString('tarefas', tarefaJson);
+  }
+
+  void addTarefa() {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        _tarefas.add(_controllerTarefa.text);
+        _controllerTarefa.clear();
+        salvarTarefa();
+      });
+    }
+  }
+
+  void removerTarefa(int index) {
+    setState(() {
+      _tarefas.removeAt(index);
+      salvarTarefa();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +98,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           InkWell(
-            onTap: () {
-              if (_formKey.currentState!.validate()) {
-                setState(() {
-                  _tarefas.add(_controllerTarefa.text);
-                  _controllerTarefa.clear();
-                });
-              }
-            },
+            onTap: addTarefa,
             child: Container(
               width: double.infinity,
               height: 40,
@@ -95,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                   trailing: IconButton(
                     icon: Icon(Icons.delete, color: Colors.indigo),
                     onPressed: () {
-                      setState(() {});
+                      removerTarefa(index);
                     },
                   ),
                 );
