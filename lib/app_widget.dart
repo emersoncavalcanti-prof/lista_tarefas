@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:lista_tarefas/home_paga.dart';
+import 'package:lista_tarefas/home_page.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-      debugShowCheckedModeBanner: false,
-    );
+    return MaterialApp(home: HomePage(), debugShowCheckedModeBanner: false);
   }
 }

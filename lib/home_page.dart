@@ -81,6 +81,7 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: EdgeInsetsGeometry.all(8),
             child: Form(
+              autovalidateMode: AutovalidateMode.always,
               key: _formKey,
               child: TextFormField(
                 controller: _controllerTarefa,
@@ -92,6 +93,14 @@ class _HomePageState extends State<HomePage> {
                   if (value == null || value.isEmpty) {
                     return 'Por favor, insira uma tarefa';
                   }
+                  if (value.length <= 4) {
+                    return 'A tarefa deve ter mais de 4 caracteres';
+                  }
+
+                  if (!value.contains('@')) {
+                    return 'A tarefa deve conter o caractere @';
+                  }
+
                   return null;
                 },
               ),
