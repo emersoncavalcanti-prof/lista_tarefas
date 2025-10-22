@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final VoidCallback onToggleChanged;
+  final bool isDarkMode;
+
+  const HomePage({
+    super.key,
+    required this.onToggleChanged,
+    required this.isDarkMode,
+  });
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -75,6 +82,14 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         backgroundColor: Colors.indigo,
+        actions: [
+          IconButton(
+            onPressed: widget.onToggleChanged,
+            icon: widget.isDarkMode
+                ? Icon(Icons.wb_sunny)
+                : Icon(Icons.nightlight_round, color: Colors.white),
+          ),
+        ],
       ),
       body: Column(
         children: [
