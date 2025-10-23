@@ -96,7 +96,6 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: EdgeInsetsGeometry.all(8),
             child: Form(
-              autovalidateMode: AutovalidateMode.always,
               key: _formKey,
               child: TextFormField(
                 controller: _controllerTarefa,
