@@ -112,10 +112,6 @@ class _HomePageState extends State<HomePage> {
                     return 'A tarefa deve ter mais de 4 caracteres';
                   }
 
-                  if (!value.contains('@')) {
-                    return 'A tarefa deve conter o caractere @';
-                  }
-
                   return null;
                 },
               ),
