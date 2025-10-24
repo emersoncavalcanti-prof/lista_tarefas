@@ -63,6 +63,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  Future<void> salvarTema(bool isDark) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isDark', isDark);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,7 +89,10 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.indigo,
         actions: [
           IconButton(
-            onPressed: widget.onToggleChanged,
+            onPressed: (){
+              widget.onToggleChanged();
+              salvarTema(!widget.isDarkMode);
+            },
             icon: widget.isDarkMode
                 ? Icon(Icons.wb_sunny)
                 : Icon(Icons.nightlight_round, color: Colors.white),
